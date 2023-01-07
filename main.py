@@ -3,6 +3,7 @@ import sys
 from settings import *
 from player import Player
 from map import *
+from obstacles import Obstacles
 
 is_start = False
 
@@ -34,6 +35,8 @@ class Game:
         self.cloud = Cloud(self.screen, self.all_sprites)
         self.player = Player(self.all_sprites)
         self.ground = Ground(self.screen, self.all_sprites)
+        self.obstacles = Obstacles(
+            self.player.rect.h, self.player.rect.w, self.all_sprites)
 
     def run(self):
         global is_start
@@ -53,6 +56,7 @@ class Game:
             self.all_sprites.draw(self.screen)
             self.player.update(is_start)
             self.ground.render()
+            self.obstacles.update(is_start)
 
             pygame.display.update()
             self.clock.tick(frame_rate)

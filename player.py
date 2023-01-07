@@ -18,10 +18,12 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load(
             self.animation_list[0]).convert_alpha()
         self.image_copy = self.image  # used for rotating player
+
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        self.gravity = 0.1
+
+        self.gravity = 0.05
         self.fall_speed = 0
-        self.jump_speed = -15
+        self.jump_speed = -10
 
     def animation(self):
         self.current_animation += self.animation_speed
