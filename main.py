@@ -31,6 +31,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         # self.bg = BG(self.all_sprites)
         self.skyline = Skyline(self.screen, self.all_sprites)
+        self.cloud = Cloud(self.screen, self.all_sprites)
         self.player = Player(self.all_sprites)
         self.ground = Ground(self.screen, self.all_sprites)
 
