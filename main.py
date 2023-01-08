@@ -31,12 +31,16 @@ class Game:
 
         self.all_sprites = pygame.sprite.Group()
         # self.bg = BG(self.all_sprites)
-        self.skyline = Skyline(self.screen, self.all_sprites)
-        self.cloud = Cloud(self.screen, self.all_sprites)
-        self.ground = Ground(self.screen, self.all_sprites)
+        self.skyline = Skyline(self.all_sprites)
+        self.cloud = Cloud(self.all_sprites)
+        self.ground = Ground(self.all_sprites)
         self.obstacles = Obstacles(self.all_sprites)
 
         self.title = Title(self.all_sprites)
+
+    def reset(self):
+        background_speed[0] = 3
+        self.obstacles.reset()
 
     def run(self):
         global is_start
@@ -51,11 +55,18 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         is_start = True
                         self.obstacles.player.jump()
+                    if event.key == pygame.K_v:
+                        self.reset()
+                        self.__init__()
+                        self.run()
+
             self.screen.fill((221, 198, 161))
 
             self.all_sprites.draw(self.screen)
             self.ground.render()
             self.obstacles.update(is_start)
+
+            self.title.update(is_start)
 
             pygame.display.update()
             self.clock.tick(frame_rate)

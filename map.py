@@ -3,7 +3,7 @@ from settings import *
 
 
 class Cloud():
-    def __init__(self, screen, block_group):
+    def __init__(self, block_group):
         self.group = pygame.sprite.Group()
         cloud_dict = {
             0: {
@@ -27,11 +27,9 @@ class Cloud():
                 self.group.add(Block(
                     block_group, cloud_dict[i]["pos"][j], cloud_dict[i]["file_path"], True, False))
 
-        self.group.draw(screen)
-
 
 class Skyline():
-    def __init__(self, screen, block_group):
+    def __init__(self, block_group):
         self.group = pygame.sprite.Group()
 
         for i in range(round(screen_w / block_size)):
@@ -41,8 +39,6 @@ class Skyline():
         for i in range(round(screen_w / block_size)):
             self.group.add(
                 Block(block_group, (i * block_size, screen_h - block_size * 2), "assets/sky_bottom.png", False, True))
-
-        self.group.draw(screen)
 
 
 class Block(pygame.sprite.Sprite):
@@ -61,10 +57,9 @@ class Block(pygame.sprite.Sprite):
 
 
 class Ground():
-    def __init__(self, screen, block_group):
+    def __init__(self, block_group):
         super().__init__()
         self.group = pygame.sprite.Group()
-        self.screen = screen
 
         # create an extra ground to make the animation
         for i in range(round(screen_w / block_size) * 2):
@@ -73,7 +68,7 @@ class Ground():
 
     def render(self):
         # reset pos if first floor nearly reach its ending ([-2] position of the first floor)
-        self.group.draw(self.screen)
+        # self.group.draw(self.screen)
         ground_sprites = self.group.sprites()
         if(ground_sprites[int(len(ground_sprites) / 2) - 1].rect.right <= 0):
             for i, block in enumerate(self.group.sprites()):

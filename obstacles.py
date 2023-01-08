@@ -2,6 +2,7 @@ import pygame
 from settings import *
 from random import randrange
 from player import Player
+from text import All_Text
 
 
 class pipe(pygame.sprite.Sprite):
@@ -21,6 +22,8 @@ class Obstacles():
         # init player here => able to access to obstacles
         self.player = Player(group)
         self.player_score = 0
+
+        self.all_text = All_Text(group)
 
         self.pipe_num = 5
 
@@ -69,13 +72,15 @@ class Obstacles():
             self.last_index = index
 
     def update(self, is_start):
+        self.all_text.update(is_start, self.player_score)
         self.player.update(is_start)
         pipe_sprites = self.obstacles_group.sprites()
+
         if is_start:
             for i in range(0, len(pipe_sprites) - 1, 2):
                 self.check_collision(pipe_sprites[i], pipe_sprites[i+1])
                 self.scoring(pipe_sprites[i], pipe_sprites[i+1], i)
-                print(self.player_score)
+
                 if pipe_sprites[i+1].rect.right <= 0:
                     self.redraw_pipes(pipe_sprites[i], pipe_sprites[i+1])
 
@@ -83,3 +88,7 @@ class Obstacles():
                 pipe_sprites[i+1].rect.x -= background_speed[0]
 
                 self.last_pipe_x = pipe_sprites[i+1].rect.x
+
+    def reset(self):
+        self.player.rect.x = self.player.x
+        self.player.rect.y = self.player.y
