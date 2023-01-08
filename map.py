@@ -80,4 +80,4 @@ class Ground():
                 block.rect.x = i * block_size
         else:
             for block in self.group.sprites():
-                block.rect.x -= background_speed
+                block.rect.x -= background_speed[0]

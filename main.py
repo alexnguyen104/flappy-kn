@@ -1,9 +1,9 @@
 import pygame
 import sys
 from settings import *
-from player import Player
 from map import *
 from obstacles import Obstacles
+from text import *
 
 is_start = False
 
@@ -33,10 +33,10 @@ class Game:
         # self.bg = BG(self.all_sprites)
         self.skyline = Skyline(self.screen, self.all_sprites)
         self.cloud = Cloud(self.screen, self.all_sprites)
-        self.player = Player(self.all_sprites)
         self.ground = Ground(self.screen, self.all_sprites)
-        self.obstacles = Obstacles(
-            self.player.rect.h, self.player.rect.w, self.all_sprites)
+        self.obstacles = Obstacles(self.all_sprites)
+
+        self.title = Title(self.all_sprites)
 
     def run(self):
         global is_start
@@ -50,11 +50,10 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         is_start = True
-                        self.player.jump()
+                        self.obstacles.player.jump()
             self.screen.fill((221, 198, 161))
 
             self.all_sprites.draw(self.screen)
-            self.player.update(is_start)
             self.ground.render()
             self.obstacles.update(is_start)
 
