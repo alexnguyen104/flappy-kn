@@ -28,7 +28,7 @@ class Obstacles():
         self.group = group
 
         self.distance = self.player.rect.w * 2.5
-        self.gap_height = self.player.rect.h * 4
+        self.gap_height = self.player.rect.h * 4.3
         self.obstacles_group = pygame.sprite.Group()
 
         self.max_y = screen_h / 2
