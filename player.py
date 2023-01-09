@@ -1,5 +1,7 @@
 import pygame
 from settings import *
+from sound import play_sound
+from time import sleep
 
 
 class Player(pygame.sprite.Sprite):
@@ -30,6 +32,10 @@ class Player(pygame.sprite.Sprite):
         self.allow_jump = True
         self.allow_rotate = True
 
+        self.is_game_over = False
+
+        self.first_loop_when_game_over = 0
+
     def animation(self):
         if not self.animation_is_stop:
             self.current_animation += self.animation_speed
@@ -52,6 +58,7 @@ class Player(pygame.sprite.Sprite):
         if self.allow_jump:
             self.fall_speed = 0
             self.y = self.jump_speed
+            play_sound("assets/sound/jump_sound.wav")
 
     def rotate(self):
         if self.allow_rotate:
@@ -62,8 +69,6 @@ class Player(pygame.sprite.Sprite):
     def check_collide_ground(self):
         if(self.rect.bottom >= screen_h - block_size):
             self.rect.bottom = screen_h - block_size
-            self.y = 0
-            self.fall_speed = 0
             self.stop_movement()
 
     def apply_gravity(self):
@@ -77,6 +82,11 @@ class Player(pygame.sprite.Sprite):
         self.allow_rotate = False
         self.y = 0
         self.fall_speed = 0
+        self.is_game_over = True
+        self.first_loop_when_game_over += 1
+        if self.first_loop_when_game_over == 1:
+            play_sound("assets/sound/hit_sound.wav")
+            play_sound("assets/sound/game_over.wav")
         background_speed[0] = 0
 
     def update(self, is_start):
@@ -86,3 +96,8 @@ class Player(pygame.sprite.Sprite):
             self.apply_gravity()
             self.rect.y += self.y
             self.check_collide_ground()
+
+            if self.rect.bottom < 0:  # check if player fly to high
+                self.allow_jump = False
+            elif not self.is_game_over:
+                self.allow_jump = True

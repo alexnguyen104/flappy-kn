@@ -3,19 +3,10 @@ import sys
 from settings import *
 from map import *
 from obstacles import Obstacles
-from text import *
+from text_related import *
+
 
 is_start = False
-
-
-class BG(pygame.sprite.Sprite):
-    def __init__(self, group):
-        super().__init__(group)
-        self.image = pygame.image.load("assets/sky.jpg").convert()
-        scale_factor = screen_h / self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (self.image.get_width(
-        ) * scale_factor - block_size, self.image.get_height() * scale_factor - block_size))
-        self.rect = self.image.get_rect(topleft=(-100, 0))
 
 
 class Game:
@@ -39,8 +30,9 @@ class Game:
         self.title = Title(self.all_sprites)
 
     def reset(self):
+        global is_start
         background_speed[0] = 3
-        self.obstacles.reset()
+        is_start = False
 
     def run(self):
         global is_start
@@ -55,7 +47,7 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         is_start = True
                         self.obstacles.player.jump()
-                    if event.key == pygame.K_v:
+                    if event.key == pygame.K_RETURN and self.obstacles.player.is_game_over:
                         self.reset()
                         self.__init__()
                         self.run()

@@ -2,7 +2,7 @@ import pygame
 from settings import *
 from random import randrange
 from player import Player
-from text import All_Text
+from text_related import All_Text
 
 
 class pipe(pygame.sprite.Sprite):
@@ -23,8 +23,6 @@ class Obstacles():
         self.player = Player(group)
         self.player_score = 0
 
-        self.all_text = All_Text(group)
-
         self.pipe_num = 5
 
         self.group = group
@@ -41,6 +39,8 @@ class Obstacles():
         self.last_index = -1  # used to store last pipe's index that player passed to count score
 
         self.init_pipes()
+
+        self.all_text = All_Text(group)
 
     def init_pipes(self):
         for i in range(self.pipe_num):
@@ -75,6 +75,9 @@ class Obstacles():
         self.all_text.update(is_start, self.player_score)
         self.player.update(is_start)
         pipe_sprites = self.obstacles_group.sprites()
+
+        if self.player.is_game_over:
+            self.all_text.game_over(self.player_score)
 
         if is_start:
             for i in range(0, len(pipe_sprites) - 1, 2):
