@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
         self.gravity = 0.05
-        self.jump_speed = -9
+        self.jump_speed = -8
         self.fall_speed = 0
 
         self.mask = pygame.mask.from_surface(self.image)
@@ -72,7 +72,7 @@ class Player(pygame.sprite.Sprite):
             self.stop_movement()
 
     def apply_gravity(self):
-        self.y += 0.5*self.gravity + self.fall_speed
+        self.y += 0.5*self.gravity + self.fall_speed/2
         self.fall_speed += self.gravity
 
     def stop_movement(self):
