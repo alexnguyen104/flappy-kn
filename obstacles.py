@@ -44,7 +44,7 @@ class Obstacles():
 
     def init_pipes(self):
         for i in range(self.pipe_num):
-            up_pipe_y = randrange(self.min_y, self.max_y, block_size)
+            up_pipe_y = randrange(int(self.min_y), int(self.max_y), block_size)
             down_pipe_y = up_pipe_y + self.gap_height
             self.obstacles_group.add(
                 pipe(self.group, (i * self.distance + screen_w, up_pipe_y), False))
@@ -52,7 +52,7 @@ class Obstacles():
                 pipe(self.group, (i * self.distance + screen_w, down_pipe_y), True))
 
     def redraw_pipes(self, pipe_up, pipe_down):
-        up_pipe_y = randrange(self.min_y, self.max_y, block_size)
+        up_pipe_y = randrange(int(self.min_y), int(self.max_y), block_size)
         down_pipe_y = up_pipe_y + self.gap_height
 
         pipe_up.rect.bottomleft = (
